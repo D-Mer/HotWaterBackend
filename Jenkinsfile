@@ -1,7 +1,7 @@
 node{
     stage('git checkout'){
         updateGitlabCommitStatus name: 'jenkins', state: 'pending'
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], browser: [$class: 'GitHub', repoUrl: 'https://git.nju.edu.cn/'], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3', url: 'http://212.129.149.40/171250507_IIICEStseB/Backend-iiicestseb']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '025900b3-40b1-4638-9001-bc937af85746', url: 'https://git.nju.edu.cn/jh/hotwaterbackend']]])
         echo '=== git clone end ==='
     }
 
@@ -22,8 +22,8 @@ node{
 
     stage('clean'){
         updateGitlabCommitStatus name: 'jenkins', state: 'running'
-        sh label: 'test', returnStatus: true, script: 'mvn clean'
-        echo '=== git clean end ==='
+        sh label: 'clean', returnStatus: true, script: 'mvn clean'
+        echo '=== mvn clean end ==='
     }
 
 //     stage('test'){
@@ -50,22 +50,28 @@ node{
 //         jacoco classPattern: '**/classes/**/controller,**/classes/**/serviceImpl', exclusionPattern: '**/*Test*.class', sourceInclusionPattern: '**/*ServiceImpl.java,**/*Controller.java'
 //     }
 
-//     stage('clean test'){
-//         updateGitlabCommitStatus name: 'jenkins', state: 'running'
-//         sh label: 'test', returnStatus: true, script: 'mvn clean'
-//     }
-
-    stage('package'){
-//         sh label: 'package', returnStatus: true, script: 'mvn package -P prod -Dmaven.test.skip=true'
-        sh label: 'package', returnStatus: true, script: 'mvn package -P prod -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
-        echo '=== package end ==='
+    stage('test'){
+        updateGitlabCommitStatus name: 'jenkins', state: 'testing'
+        sh label: 'test', returnStatus: true, script: 'mvn test -P test'
+        echo '=== mvn test end ==='
     }
 
+    stage('package'){
+        updateGitlabCommitStatus name: 'jenkins', state: 'packaging'
+//         sh label: 'package', returnStatus: true, script: 'mvn package -P prod -Dmaven.test.skip=true'
+        sh label: 'package', returnStatus: true, script: 'mvn package -P main -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
+        echo '=== mvn package end ==='
+    }
+
+// 下面这个是远程部署到非jenkins所在的服务器上，本项目在本机部署
     stage('deploy'){
-		sshPublisher(publishers: [sshPublisherDesc(configName: 'tencent', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /var/www
-./stop.sh
-./start.sh''', execTimeout: 5000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-		updateGitlabCommitStatus name: 'jenkins', state: 'success'
+		updateGitlabCommitStatus name: 'jenkins', state: 'deploying'
+		sh label: 'deploy', returnStatus: true, script: """
+		    scp target/*.jar jh@172.19.241.40:/home/jh/artifacts/
+            ssh jh@172.19.241.40
+            cd artifacts
+            ./deploy.sh
+		"""
         echo '=== deploy end ==='
 	}
 

@@ -83,13 +83,19 @@
 
     <profiles>
         <profile>
-            <id>local</id>
+            <id>main</id>
             <properties>
-                <profileActive>dev</profileActive>
+                <profileActive>main</profileActive>
             </properties>
         </profile>
         <profile>
-            <id>main</id>
+            <id>test</id>
+            <properties>
+                <profileActive>test</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
             <properties>
                 <profileActive>local</profileActive>
             </properties>
