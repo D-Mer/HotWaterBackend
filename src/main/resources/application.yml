@@ -4,7 +4,7 @@ spring:
   datasource:
     type: com.mysql.cj.jdbc.MysqlDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/HotWater?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/HotWater?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false
     username: root
     password: root
 
@@ -69,5 +69,5 @@ mybatis:
 server:
   tomcat:
     uri-encoding: utf-8
-  port: 4000
+  port: 8000
 
