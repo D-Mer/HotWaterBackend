@@ -1,7 +1,7 @@
 node{
     stage('git checkout'){
         updateGitlabCommitStatus name: 'jenkins', state: 'pending'
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '025900b3-40b1-4638-9001-bc937af85746', url: 'https://git.nju.edu.cn/jh/hotwaterbackend']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '1cbee7e4-b684-4b3a-a4a0-06ad542c4b2c', url: 'https://github.com/D-Mer/HotWaterBackend']]])
         echo '=== git clone end ==='
     }
 
