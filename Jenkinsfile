@@ -1,6 +1,6 @@
 node{
     stage('git checkout'){
-        updateGitlabCommitStatus name: 'jenkins', state: 'pending'
+//         updateGitlabCommitStatus name: 'jenkins', state: 'pending'
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '1cbee7e4-b684-4b3a-a4a0-06ad542c4b2c', url: 'https://github.com/D-Mer/HotWaterBackend']]])
         echo '=== git clone end ==='
     }
@@ -21,7 +21,7 @@ node{
 //     }
 
     stage('clean'){
-        updateGitlabCommitStatus name: 'jenkins', state: 'running'
+//         updateGitlabCommitStatus name: 'jenkins', state: 'running'
         sh label: 'clean', returnStatus: true, script: 'mvn clean'
         echo '=== mvn clean end ==='
     }
@@ -51,13 +51,13 @@ node{
 //     }
 
     stage('test'){
-        updateGitlabCommitStatus name: 'jenkins', state: 'testing'
+//         updateGitlabCommitStatus name: 'jenkins', state: 'running'
         sh label: 'test', returnStatus: true, script: 'mvn test -P test'
         echo '=== mvn test end ==='
     }
 
     stage('package'){
-        updateGitlabCommitStatus name: 'jenkins', state: 'packaging'
+//         updateGitlabCommitStatus name: 'jenkins', state: 'running'
 //         sh label: 'package', returnStatus: true, script: 'mvn package -P prod -Dmaven.test.skip=true'
         sh label: 'package', returnStatus: true, script: 'mvn package -P main -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
         echo '=== mvn package end ==='
@@ -65,7 +65,7 @@ node{
 
 // 下面这个是远程部署到非jenkins所在的服务器上，本项目在本机部署
     stage('deploy'){
-		updateGitlabCommitStatus name: 'jenkins', state: 'deploying'
+// 		updateGitlabCommitStatus name: 'jenkins', state: 'running'
 		sh label: 'deploy', returnStatus: true, script: """
 		    scp target/*.jar jh@172.19.241.40:/home/jh/artifacts/
             ssh jh@172.19.241.40
@@ -77,6 +77,6 @@ node{
 
     stage('archive'){
         archiveArtifacts allowEmptyArchive: true, artifacts: 'target/HotWaterBackend-0.0.1.jar', onlyIfSuccessful: true
-        updateGitlabCommitStatus name: 'jenkins', state: 'success'
+//         updateGitlabCommitStatus name: 'jenkins', state: 'success'
     }
 }
