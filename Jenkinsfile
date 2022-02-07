@@ -64,19 +64,24 @@ node{
     }
 
 // 下面这个是远程部署到非jenkins所在的服务器上，本项目在本机部署
+    def remote = [:]
+        remote.name = 'jenkins'
+        remote.host = '172.19.241.40'
+        remote.user = 'jh'
+        remote.password = 'jhqwerdf'
+        remote.allowAnyHosts = true
     stage('deploy'){
 // 		updateGitlabCommitStatus name: 'jenkins', state: 'running'
-		sh label: 'deploy', returnStatus: true, script: """
-		    scp target/*.jar jh@172.19.241.40:/home/jh/artifacts/
-            ssh jh@172.19.241.40
+        sshPut remote: remote, from: 'target/*.jar', into: '/home/jh/artifacts/'
+        sshCommand remote: remote, command: """
             cd artifacts
             ./deploy.sh
-		"""
+        """
         echo '=== deploy end ==='
 	}
 
     stage('archive'){
-        archiveArtifacts allowEmptyArchive: true, artifacts: 'target/HotWaterBackend-0.0.1.jar', onlyIfSuccessful: true
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'target/*.jar', onlyIfSuccessful: true
 //         updateGitlabCommitStatus name: 'jenkins', state: 'success'
     }
 }
