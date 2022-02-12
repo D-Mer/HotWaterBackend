@@ -72,7 +72,7 @@ node{
         remote.allowAnyHosts = true
     stage('deploy'){
 // 		updateGitlabCommitStatus name: 'jenkins', state: 'running'
-        sshPut remote: remote, from: 'target/*.jar', into: '/home/jh/artifacts/'
+        sshPut remote: remote, from: 'target/HotWaterBackend-0.0.1.jar', into: '/home/jh/artifacts/'
         sshCommand remote: remote, command: """
             cd artifacts
             ./deploy.sh
