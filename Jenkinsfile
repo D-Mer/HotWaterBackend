@@ -68,7 +68,7 @@ node{
         remote.name = 'jenkins'
         remote.host = '172.19.241.40'
         remote.user = 'jh'
-        remote.password = 'jhqwerdf'
+        remote.password = 'jhlhk2132LYHLSJ'
         remote.allowAnyHosts = true
     stage('deploy'){
 // 		updateGitlabCommitStatus name: 'jenkins', state: 'running'
