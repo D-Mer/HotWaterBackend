@@ -46,8 +46,9 @@ public class UserServiceImpl implements UserService {
             throw new UserException(ErrorMessage.UserError.USER_EXISTED_ERROR);
         }
         User user = new User();
-        user.setSex(SexType.Unknown.value);
+        user.setSex(SexType.Man.value);
         user.setEmail(signInForm.getEmail());
+        user.setUsername(signInForm.getEmail());
         user.setPassword(signInForm.getUserPwd());
         user.setRegTime(LocalDateTime.now());
         userMapper.insert(user);

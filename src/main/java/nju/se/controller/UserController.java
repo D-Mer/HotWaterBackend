@@ -54,7 +54,7 @@ public class UserController {
      * @param email 邮箱
      * @return 邮箱已注册：code = 402；邮箱未注册：code = 200
      */
-    @GetMapping("selectEmail")
+    @GetMapping("selectMail")
     public Response checkExist(@RequestParam(name = "email") String email) {
         Boolean exist = userService.checkExist(email);
         if (exist) {
