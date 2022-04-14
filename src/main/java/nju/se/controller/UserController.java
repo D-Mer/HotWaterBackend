@@ -1,21 +1,18 @@
 package nju.se.controller;
 
 import nju.se.service.UserService;
-import nju.se.vo.Response;
-import nju.se.vo.UserForm;
-import nju.se.vo.UserVO;
+import nju.se.vo.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
+import java.util.Collection;
 
 /**
  * @author jh
  * @date 2022/2/6 15:22
  */
 @RestController
-@CrossOrigin
-@RequestMapping("user")
+@RequestMapping("api/user")
 public class UserController {
 
     @Resource(name = "Regedit")
@@ -29,39 +26,67 @@ public class UserController {
     /**
      * 用户登录/注册界面 用户登录
      *
-     * @param userForm 用户表单
+     * @param signInForm 用户表单
      * @return 用户个人信息
      */
-    @PostMapping("sign_in")
-    public Response signIn(@RequestBody UserForm userForm) {
-        UserVO user = userService.signIn(userForm);
+    @PostMapping("login")
+    public Response signIn(@RequestBody SignInForm signInForm) {
+        UserVO user = userService.signIn(signInForm);
         return Response.buildSuccess(user);
     }
 
     /**
      * 用户登录/注册界面 用户注册
      *
-     * @param userForm 用户表单
+     * @param signUpForm 用户表单
      * @return 无
      */
-    @PostMapping("/sign_up")
-    public Response signUp(@RequestBody UserForm userForm) {
-        UserVO user = userService.register(userForm);
+    @PostMapping("reg")
+    public Response signUp(@RequestBody SignUpForm signUpForm) {
+        UserVO user = userService.register(signUpForm);
         return Response.buildSuccess(user);
     }
 
 
     /**
-     * 输入用户名时实时检测格式及用户存不存在
+     * 输入用户名时实时检测格式及邮箱是否已被注册
      *
-     * @param username 用户名
-     * @return 无
+     * @param email 邮箱
+     * @return 邮箱已注册：code = 402；邮箱未注册：code = 200
      */
-    @GetMapping("/check_exist")
-    @Valid
-    public Response checkExist(@RequestParam(name = "username") String username) {
-        Boolean exist = userService.checkExist(username);
-        return Response.buildSuccess(exist);
+    @GetMapping("selectEmail")
+    public Response checkExist(@RequestParam(name = "email") String email) {
+        Boolean exist = userService.checkExist(email);
+        if (exist) {
+            return Response.buildFailure(402, "该邮箱已被注册");
+        }
+        return Response.buildSuccess();
     }
+
+
+    /**
+     * 修改密码
+     * @param form 表单
+     * @return 是否成功
+     */
+    @PostMapping("updatePwd")
+    public Response updatePwd(@RequestBody ChangePwdForm form) {
+        userService.changePwd(form);
+        return Response.buildSuccess();
+    }
+
+
+    /**
+     * 修改用户个人信息
+     * @param form 表单
+     * @return 是否成功
+     */
+    @PostMapping("updateUser")
+    public Response updateUser(@RequestBody UpdateUserForm form) {
+        userService.updateUser(form);
+        return Response.buildSuccess();
+    }
+
+
 
 }

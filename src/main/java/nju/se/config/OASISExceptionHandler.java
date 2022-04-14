@@ -22,11 +22,11 @@ import java.util.Set;
 public class OASISExceptionHandler {
 
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(UserException.class)
     public Response handleUserException(UserException ex) {
         String msg = ex.getMessage();
-        return Response.buildFailure(msg);
+        return Response.buildFailure(ex.getCode(), msg);
     }
 
 

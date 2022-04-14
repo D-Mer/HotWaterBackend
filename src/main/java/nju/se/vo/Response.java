@@ -19,12 +19,12 @@ public class Response {
     /**
      * 是否成功
      */
-    private Boolean status;
+    private Integer code;
     /**
      * 成功：需要的数据
      * 失败：失败原因
      */
-    private Object result;
+    private Object data;
 
     /**
      * 没有返回值的成功信息
@@ -32,8 +32,8 @@ public class Response {
     @NotNull
     public static Response buildSuccess() {
         Response r = new Response();
-        r.setStatus(true);
-        r.setResult(null);
+        r.setCode(200);
+        r.setData(null);
         return r;
     }
 
@@ -45,8 +45,8 @@ public class Response {
     @NotNull
     public static Response buildSuccess(@NotNull Object o) {
         Response r = new Response();
-        r.setStatus(true);
-        r.setResult(o);
+        r.setCode(200);
+        r.setData(o);
         return r;
     }
 
@@ -58,8 +58,22 @@ public class Response {
     @NotNull
     public static Response buildFailure(String s) {
         Response r = new Response();
-        r.setStatus(false);
-        r.setResult(s);
+        r.setCode(400);
+        r.setData(s);
+        LOGGER.info("返回错误信息:" + s);
+        return r;
+    }
+
+    /**
+     * 返回失败消息
+     *
+     * @param s 错误原因/内容
+     */
+    @NotNull
+    public static Response buildFailure(Integer code, String s) {
+        Response r = new Response();
+        r.setCode(code);
+        r.setData(s);
         LOGGER.info("返回错误信息:" + s);
         return r;
     }

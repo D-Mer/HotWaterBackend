@@ -8,7 +8,7 @@ public class BaseException extends RuntimeException {
     /**
      * 自定义异常码，基本与http异常码保持一致，根据业务逻辑有一些调整
      */
-    public Integer code = 400;
+    private Integer code = 400;
 
     public BaseException(String msg) {
         super(msg);
@@ -18,5 +18,9 @@ public class BaseException extends RuntimeException {
         super(msg);
         this.code = code;
     }
+
+    public Integer getCode() {
+        return this.code;
+    };
 
 }

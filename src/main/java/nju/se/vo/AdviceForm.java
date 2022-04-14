@@ -6,21 +6,16 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author jh
- * @date 2022/2/17 10:46
+ * @date 2022/4/12 17:03
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserForm {
+public class AdviceForm {
 
     /**
-     * 用户名
+     * 反馈内容
      */
-    private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
+    private String adContent;
 
 }

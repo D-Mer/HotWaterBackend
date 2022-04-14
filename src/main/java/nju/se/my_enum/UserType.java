@@ -1,6 +1,7 @@
 package nju.se.my_enum;
 
 import nju.se.constant.ErrorMessage;
+import nju.se.exception.DiaryException;
 import nju.se.exception.UserException;
 
 /**
@@ -18,12 +19,12 @@ public enum UserType {
         this.value = value;
     }
 
-    public static UserType getType(String msg) {
-        if (msg == null) {
+    public static UserType getType(String value) {
+        if (value == null) {
             return null;
         }
         for (UserType type : UserType.values()) {
-            if (msg.equals(type.value)) {
+            if (value.equals(type.value)) {
                 return type;
             }
         }

@@ -1,8 +1,9 @@
 package nju.se.service;
 
 
-import nju.se.vo.UserForm;
-import nju.se.vo.UserVO;
+import nju.se.vo.*;
+
+import java.util.Collection;
 
 /**
  * @author jh
@@ -12,22 +13,25 @@ public interface UserService {
 
     /**
      * 用户登录
-     * @author wph
-     * @param userForm 用户账户密码表单
+     * @param signInForm 用户账户密码表单
      * @return 用户信息vo
      */
-    UserVO signIn(UserForm userForm);
+    UserVO signIn(SignInForm signInForm);
 
     /**
      * 用户注册
-     * @author wph
-     * @param userForm 用户账户密码表单
+     * @param signInForm 用户账户密码表单
      */
-    UserVO register(UserForm userForm);
+    UserVO register(SignUpForm signInForm);
 
     /**
-     * 判断用户名存在
-     * @param username 用户名
+     * 判断邮箱是否已被注册
+     * @param email 邮箱
      */
-    Boolean checkExist(String username);
+    Boolean checkExist(String email);
+
+
+    void changePwd(ChangePwdForm form);
+
+    void updateUser(UpdateUserForm form);
 }

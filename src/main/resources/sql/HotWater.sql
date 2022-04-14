@@ -29,11 +29,16 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL UNIQUE,
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `type` varchar(10) DEFAULT '普通用户',
+  `sex` varchar(2),
+  `avatar` varchar(200),
+  `signs` varchar(100),
+  `birthday` datetime,
+  `reg_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_name_uindex` (`username`)
+  UNIQUE KEY `user_name_uindex` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,7 +48,8 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `username`, `password`, `type`) VALUES (1,'admin','admin','admin'),(2,'jh','123456','normal'),(3,'test','123456','normal'),(4,'lhkkkkk','admin','normal');
+INSERT INTO `user` (`id`, `email`, `username`, `password`, `reg_time`, `birthday`) VALUES (1,'admin@nju.se','admin','admin', '2020-03-01',NULL),(2,'jh@nju.se','jh','123456','2020-03-02','1999-11-09'),(3,'existed@nju.se','existed','123456','2020-03-02',NULL);
+UPDATE `user` SET signs='灰灰灰灰', sex='男性' WHERE email='jh@nju.se';
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

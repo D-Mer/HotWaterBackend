@@ -1,19 +1,19 @@
 package nju.se.serviceImpl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import nju.se.constant.ErrorMessage;
 import nju.se.exception.UserException;
 import nju.se.mapper.UserMapper;
-import nju.se.my_enum.UserType;
+import nju.se.my_enum.SexType;
 import nju.se.po.User;
-import nju.se.regedit.Regedit;
 import nju.se.service.UserService;
-import nju.se.vo.UserForm;
-import nju.se.vo.UserVO;
+import nju.se.utils.DateUtil;
+import nju.se.vo.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
 /**
  * @author jh
@@ -21,20 +21,17 @@ import javax.annotation.Resource;
  */
 @Service("User")
 @Transactional(rollbackFor = Exception.class)
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
-    @Resource(name = "Regedit")
-    private Regedit regedit;
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
 
     @Override
-    public UserVO signIn(UserForm userForm) {
+    public UserVO signIn(SignInForm signInForm) {
         User user;
-        user = userMapper.findByUsername(userForm.getUsername());
+        user = userMapper.selectByEmail(signInForm.getEmail());
         //检验用户密码是否正确
-        if (user != null && user.getPassword().equals(userForm.getPassword())) {
+        if (user != null && user.getPassword().equals(signInForm.getUserPwd())) {
             return new UserVO(user);
         } else {
             throw new UserException(ErrorMessage.UserError.NAME_PASSWD_ERROR);
@@ -42,23 +39,53 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserVO register(UserForm userForm) {
+    @Transactional
+    public UserVO register(SignUpForm signInForm) {
         //检查用户是否已注册
-        User user = userMapper.findByUsername(userForm.getUsername());
-        if (user != null) {
+        if (checkExist(signInForm.getEmail())) {
             throw new UserException(ErrorMessage.UserError.USER_EXISTED_ERROR);
         }
-        user = new User();
-        user.setUsername(userForm.getUsername());
-        user.setPassword(userForm.getPassword());
-        user.setType(UserType.Normal.value);
+        User user = new User();
+        user.setSex(SexType.Unknown.value);
+        user.setEmail(signInForm.getEmail());
+        user.setPassword(signInForm.getUserPwd());
+        user.setRegTime(LocalDateTime.now());
         userMapper.insert(user);
         return new UserVO(user);
     }
 
     @Override
-    public Boolean checkExist(String username) {
-        User user = userMapper.findByUsername(username);
+    public Boolean checkExist(String email) {
+        User user = userMapper.selectByUsername(email);
         return null != user;
     }
+
+    @Override
+    @Transactional
+    public void changePwd(ChangePwdForm form) {
+        User user = userMapper.selectById(form.getUserId());
+        if (user == null) {
+            throw new UserException(ErrorMessage.UserError.USER_NOT_EXISTED);
+        } else if (!user.getPassword().equals(form.getOldPassword())) {
+            throw new UserException(402, ErrorMessage.UserError.OLD_PASSWD_ERROR);
+        }
+        user.setPassword(form.getUserPwd());
+        userMapper.updateById(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(UpdateUserForm form) {
+        User user = userMapper.selectById(form.getUserId());
+        if (user == null) {
+            throw new UserException(ErrorMessage.UserError.USER_NOT_EXISTED);
+        }
+        user.setUsername(form.getUserName());
+        user.setSex(SexType.voToType(form.getSex()).value);
+        user.setBirthday(DateUtil.parseDate(form.getBirthday()));
+        user.setSigns(form.getSigns());
+        userMapper.updateById(user);
+    }
+
+
 }

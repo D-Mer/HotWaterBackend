@@ -17,6 +17,17 @@ public class ErrorMessage {
         public static final String PASSWORD_CONTAIN_SPACE = "密码不能含有空格";
 
         public static final String USER_TYPE_INVALID_ERROR = "不存在该类型用户";
+        public static final String SEX_TYPE_INVALID_ERROR = "不存在该类型性别";
+
+        public static final String USER_NOT_EXISTED = "用户不存在";
+
+        public static final String OLD_PASSWD_ERROR = "旧密码错误";
+    }
+
+    public static class DiaryError {
+        public static final String INVALID_PRIVACY = "不支持的隐私级别";
+        public static final String DIARY_NOT_EXIST = "日记不存在";
+        public static final String NO_SUCH_DIARY_OF_USER = "用户没有该日记";
     }
 
     public static class HttpError {
