@@ -2,8 +2,9 @@ package nju.se.service;
 
 
 import nju.se.vo.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collection;
+import java.io.File;
 
 /**
  * @author jh
@@ -31,7 +32,27 @@ public interface UserService {
     Boolean checkExist(String email);
 
 
+    /**
+     * 修改密码
+     * @param form 修改密码表单
+     */
     void changePwd(ChangePwdForm form);
 
+    /**
+     * 更新用户信息
+     * @param form 用户信息表单
+     */
     void updateUser(UpdateUserForm form);
+
+    /**
+     * 更新头像
+     * @return 更新后的图像url地址
+     */
+    String updateAvatar(Integer userId, MultipartFile avatar);
+
+    /**
+     * 获取用户头像
+     * @return 图像文件流
+     */
+    File getAvatar(Integer userId);
 }

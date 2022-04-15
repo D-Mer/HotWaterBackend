@@ -60,7 +60,7 @@ public class UserVO {
     private String regTime;
 
     /**
-     * 注册日期
+     * 头像地址
      */
     private String avatar;
 
@@ -71,6 +71,7 @@ public class UserVO {
         this.userName = user.getUsername();
         this.signs = user.getSigns();
         this.sex = SexType.typeToVO(SexType.valueToType(user.getSex()));
+        this.avatar = user.getAvatar();
         if (user.getBirthday() != null) {
             this.birthday = DateUtil.toStringDate(user.getBirthday());
         }

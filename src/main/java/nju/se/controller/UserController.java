@@ -1,10 +1,17 @@
 package nju.se.controller;
 
+import nju.se.constant.ErrorMessage;
 import nju.se.service.UserService;
 import nju.se.vo.*;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Collection;
 
 /**
@@ -85,6 +92,36 @@ public class UserController {
     public Response updateUser(@RequestBody UpdateUserForm form) {
         userService.updateUser(form);
         return Response.buildSuccess();
+    }
+
+
+    /**
+     * 上传头像
+     */
+    @PostMapping("avatar")
+    public Response updateAvatar(@RequestParam Integer userId, @RequestParam("file") MultipartFile avatar) {
+        String url = userService.updateAvatar(userId, avatar);
+        return Response.buildSuccess(url);
+    }
+
+    /**
+     * 下载头像
+     */
+    @GetMapping(value = "avatar")
+    public void getAvatar(@RequestParam Integer userId, HttpServletResponse response) throws Exception {
+        File f = userService.getAvatar(userId);
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = new FileInputStream(f);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        OutputStream os = response.getOutputStream();
+        int i = bis.read(buffer);
+        while (i != -1) {
+            os.write(buffer, 0, i);
+            i = bis.read(buffer);
+        }
+        os.close();
+        bis.close();
+        fis.close();
     }
 
 

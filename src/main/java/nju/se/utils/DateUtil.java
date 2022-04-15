@@ -15,6 +15,7 @@ public class DateUtil {
     public static final String YEAR_FORMAT = "yyyy";
     public static final String MONTH_FORMAT = "yyyy-MM";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "HH:mm:ss";
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String CHRON_FORMAT = "MM-dd May yyyy";
 
@@ -47,6 +48,27 @@ public class DateUtil {
      */
     public static LocalDateTime parseDate(String str) throws DateException {
         SimpleDateFormat f = new SimpleDateFormat(DATE_FORMAT);
+        Date date;
+        try {
+            date = f.parse(str);
+            Instant instant = date.toInstant();
+            ZoneId zoneId = ZoneId.systemDefault();
+            return instant.atZone(zoneId).toLocalDateTime();
+        } catch (ParseException e) {
+            throw new DateException(FORMAT_ERROR + " : " + str + "不符合 " + DATE_FORMAT + " 格式");
+        }
+    }
+
+
+    /**
+     * 将HH:mm:ss格式的字符串转换为时间
+     *
+     * @param str HH:mm:ss格式
+     * @return LocalDateTime格式的时间对象
+     * @throws DateException 格式错误异常
+     */
+    public static LocalDateTime parseTime(String str) throws DateException {
+        SimpleDateFormat f = new SimpleDateFormat(TIME_FORMAT);
         Date date;
         try {
             date = f.parse(str);
@@ -109,6 +131,21 @@ public class DateUtil {
     public static String toStringDate(LocalDateTime dateTime) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+            return formatter.format(dateTime);
+        } catch (Exception e) {
+            throw new DateException(PARSE_ERROR);
+        }
+    }
+
+    /**
+     * 将LocalDateTime对象转换为"HH:mm:ss"格式字符串
+     *
+     * @param dateTime LocalDateTime时间对象
+     * @return "HH:mm:ss"格式字符串
+     */
+    public static String toStringTime(LocalDateTime dateTime) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_FORMAT);
             return formatter.format(dateTime);
         } catch (Exception e) {
             throw new DateException(PARSE_ERROR);

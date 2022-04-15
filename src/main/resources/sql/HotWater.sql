@@ -133,7 +133,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `email`, `username`, `password`, `signs`, `birthday`, `reg_time`, `avatar`, `sex`) VALUES (1,'admin@nju.se','admin','admin',NULL,NULL,'2022-04-01 00:00:00',NULL,'未知'),(2,'jh@nju.se','jh','qweqwe','灰灰灰灰','1999-11-08 00:00:00','2022-04-01 00:00:00',NULL,'男性'),(3,'existed@nju.se','existed','123456',NULL,NULL,'2022-04-02 00:00:00',NULL,'未知');
+INSERT INTO `user` (`id`, `email`, `username`, `password`, `signs`, `birthday`, `reg_time`, `avatar`, `sex`) VALUES (1,'admin@nju.se','admin','admin',NULL,NULL,'2022-04-01 00:00:00',NULL,'男性'),(2,'jh@nju.se','jh','qweqwe','灰灰灰灰','1999-11-08 00:00:00','2022-04-01 00:00:00',NULL,'男性'),(3,'existed@nju.se','existed','123456',NULL,NULL,'2022-04-02 00:00:00',NULL,'男性');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

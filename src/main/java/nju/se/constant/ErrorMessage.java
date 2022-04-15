@@ -22,6 +22,9 @@ public class ErrorMessage {
         public static final String USER_NOT_EXISTED = "用户不存在";
 
         public static final String OLD_PASSWD_ERROR = "旧密码错误";
+        public static final String INVALID_AVATAR_POSTFIX = "头像文件名不合法";
+        public static final String INVALID_AVATAR_FILE = "头像文件不合法";
+        public static final String AVATAR_NOT_EXIST = "头像文件不存在";
     }
 
     public static class DiaryError {
@@ -32,5 +35,6 @@ public class ErrorMessage {
 
     public static class HttpError {
         public static final String REQUEST_URL_NOT_EXIST = "请求路径有误";
+        public static final String INVALID_REQUEST_CONTEXT = "请求状态有误";
     }
 }

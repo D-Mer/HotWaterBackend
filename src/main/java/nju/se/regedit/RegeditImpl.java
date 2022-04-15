@@ -8,8 +8,10 @@ import nju.se.service.UserService;
 import nju.se.vo.*;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -61,7 +63,15 @@ public class RegeditImpl implements Regedit {
         userService.updateUser(form);
     }
 
+    @Override
+    public String updateAvatar(Integer userId, MultipartFile avatar) {
+        return userService.updateAvatar(userId, avatar);
+    }
 
+    @Override
+    public File getAvatar(Integer userId) {
+        return userService.getAvatar(userId);
+    }
 
 
     //-----------------------------------------DiaryService--------------------------------------
