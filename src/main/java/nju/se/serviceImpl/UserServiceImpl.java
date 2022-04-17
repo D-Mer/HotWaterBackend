@@ -14,17 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -52,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if (user != null && user.getPassword().equals(signInForm.getUserPwd())) {
             return new UserVO(user);
         } else {
-            throw new UserException(ErrorMessage.UserError.NAME_PASSWD_ERROR);
+            throw new UserException(ErrorMessage.UserError.NAME_PSW_ERROR);
         }
     }
 
@@ -86,7 +80,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserException(ErrorMessage.UserError.USER_NOT_EXISTED);
         } else if (!user.getPassword().equals(form.getOldPassword())) {
-            throw new UserException(402, ErrorMessage.UserError.OLD_PASSWD_ERROR);
+            throw new UserException(402, ErrorMessage.UserError.OLD_PSW_ERROR);
         }
         user.setPassword(form.getUserPwd());
         userMapper.updateById(user);
@@ -122,10 +116,10 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserException(ErrorMessage.UserError.USER_NOT_EXISTED);
         }
-        String filename = avatar.getOriginalFilename();
-        if (filename == null) {
-            throw new UserException(ErrorMessage.UserError.INVALID_AVATAR_POSTFIX);
-        }
+//        String filename = avatar.getOriginalFilename();
+//        if (filename == null) {
+//            throw new UserException(ErrorMessage.UserError.INVALID_AVATAR_POSTFIX);
+//        }
         for (String format : supportAvatarFormats) {
             try {
                 Files.deleteIfExists(Paths.get(generateAvatarSavePath(userId, format)));
