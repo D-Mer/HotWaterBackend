@@ -108,23 +108,33 @@ public class UserController {
      * 下载头像
      */
     @GetMapping(value = "avatar")
-    public void getAvatar(@RequestParam Integer userId, HttpServletResponse response){
+    public void getAvatar(@RequestParam Integer userId, HttpServletResponse response) throws Exception {
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        OutputStream os = null;
         try {
             File f = userService.getAvatar(userId);
             byte[] buffer = new byte[1024];
-            FileInputStream fis = new FileInputStream(f);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            OutputStream os = response.getOutputStream();
+            fis = new FileInputStream(f);
+            bis = new BufferedInputStream(fis);
+            os = response.getOutputStream();
             int i = bis.read(buffer);
             while (i != -1) {
                 os.write(buffer, 0, i);
                 i = bis.read(buffer);
             }
-            os.close();
-            bis.close();
-            fis.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (!(os == null)){
+                os.close();
+            }
+            if (!(bis == null)){
+                bis.close();
+            }
+            if (!(fis == null)){
+                fis.close();
+            }
         }
     }
 }
