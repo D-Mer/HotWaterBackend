@@ -39,6 +39,7 @@ public class UrlUtil {
             ip = Inet4Address.getLocalHost();
         } catch (UnknownHostException ignored) {
         }
+        assert ip != null;
         return "http://" + ip.getHostAddress() + ":" + singleton.port + "/";
     }
 }
