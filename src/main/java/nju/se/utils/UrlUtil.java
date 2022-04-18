@@ -30,10 +30,10 @@ public class UrlUtil {
     }
 
     public static String getUrl() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
-            throw new UrlUtilException(ErrorMessage.HttpError.INVALID_REQUEST_CONTEXT);
-        }
+//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        if (requestAttributes == null) {
+//            throw new UrlUtilException(ErrorMessage.HttpError.INVALID_REQUEST_CONTEXT);
+//        }
         InetAddress ip = null;
         try {
             ip = Inet4Address.getLocalHost();
