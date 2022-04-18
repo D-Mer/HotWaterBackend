@@ -18,6 +18,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,11 +30,7 @@ import java.util.Set;
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
-    static final Set<String> supportAvatarFormats = new HashSet<String>() {{
-        add("jpg");
-        add("jpeg");
-        add("png");
-    }};
+    static final Set<String> supportAvatarFormats = new HashSet<>(Arrays.asList("jpg", "jpeg", "png"));
 
     @Resource
     private UserMapper userMapper;

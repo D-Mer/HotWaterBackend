@@ -9,47 +9,46 @@ import java.util.TreeMap;
  */
 public class StringUtil {
 
-    private static final Map<Character, Character> ACCENTS = new TreeMap<Character, Character>() {
-        {
-            put('Á', 'A');
-            put('À', 'A');
-            put('Â', 'A');
-            put('á', 'a');
-            put('à', 'a');
-            put('â', 'a');
-            put('ä', 'a');
-            put('ą', 'a');
-            put('ß', 'B');
-            put('ç', 'c');
-            put('ć', 'c');
-            put('È', 'E');
-            put('É', 'E');
-            put('Ê', 'E');
-            put('Ë', 'E');
-            put('è', 'e');
-            put('é', 'e');
-            put('ê', 'e');
-            put('ë', 'e');
-            put('Î', 'I');
-            put('Ï', 'I');
-            put('î', 'i');
-            put('ï', 'i');
-            put('⊘', 'o');
-            put('Ô', 'O');
-            put('Ö', 'O');
-            put('ø', 'o');
-            put('ó', 'o');
-            put('ô', 'o');
-            put('ö', 'o');
-            put('õ', 'o');
-            put('ò', 'o');
-            put('Û', 'U');
-            put('Ù', 'U');
-            put('ü', 'u');
-            put('û', 'u');
-            put('ù', 'u');
-        }
-    };
+    private static final Map<Character, Character> ACCENTS = new TreeMap<>();
+    static {
+            ACCENTS.put('Á', 'A');
+            ACCENTS.put('À', 'A');
+            ACCENTS.put('Â', 'A');
+            ACCENTS.put('á', 'a');
+            ACCENTS.put('à', 'a');
+            ACCENTS.put('â', 'a');
+            ACCENTS.put('ä', 'a');
+            ACCENTS.put('ą', 'a');
+            ACCENTS.put('ß', 'B');
+            ACCENTS.put('ç', 'c');
+            ACCENTS.put('ć', 'c');
+            ACCENTS.put('È', 'E');
+            ACCENTS.put('É', 'E');
+            ACCENTS.put('Ê', 'E');
+            ACCENTS.put('Ë', 'E');
+            ACCENTS.put('è', 'e');
+            ACCENTS.put('é', 'e');
+            ACCENTS.put('ê', 'e');
+            ACCENTS.put('ë', 'e');
+            ACCENTS.put('Î', 'I');
+            ACCENTS.put('Ï', 'I');
+            ACCENTS.put('î', 'i');
+            ACCENTS.put('ï', 'i');
+            ACCENTS.put('⊘', 'o');
+            ACCENTS.put('Ô', 'O');
+            ACCENTS.put('Ö', 'O');
+            ACCENTS.put('ø', 'o');
+            ACCENTS.put('ó', 'o');
+            ACCENTS.put('ô', 'o');
+            ACCENTS.put('ö', 'o');
+            ACCENTS.put('õ', 'o');
+            ACCENTS.put('ò', 'o');
+            ACCENTS.put('Û', 'U');
+            ACCENTS.put('Ù', 'U');
+            ACCENTS.put('ü', 'u');
+            ACCENTS.put('û', 'u');
+            ACCENTS.put('ù', 'u');
+    }
 
     public static String toUUID(Integer id, String type) {
         return type + "-" + id;
