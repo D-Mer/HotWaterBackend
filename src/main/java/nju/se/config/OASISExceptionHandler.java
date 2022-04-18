@@ -49,7 +49,7 @@ public class OASISExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Response handleException(Exception ex) {
-        ex.printStackTrace();
+        System.out.println(ex.getMessage());
         return Response.buildFailure(ex.getMessage());
     }
 

@@ -122,20 +122,20 @@ public class UserController {
                 i = bis.read(buffer);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             if (!(bis == null)){
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
             }
             if (!(os == null)){
                 try {
                     os.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
             }
         }
