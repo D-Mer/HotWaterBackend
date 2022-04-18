@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  * @author jh
@@ -122,20 +123,20 @@ public class UserController {
                 i = bis.read(buffer);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(getClass().getName()).info(e.getMessage());
         } finally {
             if (!(bis == null)){
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    Logger.getLogger(getClass().getName()).info(e.getMessage());
                 }
             }
             if (!(os == null)){
                 try {
                     os.close();
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    Logger.getLogger(getClass().getName()).info(e.getMessage());
                 }
             }
         }

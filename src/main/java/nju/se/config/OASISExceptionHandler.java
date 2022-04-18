@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * @author jh
@@ -49,7 +50,7 @@ public class OASISExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Response handleException(Exception ex) {
-        System.out.println(ex.getMessage());
+        Logger.getLogger(getClass().getName()).info(ex.getMessage());
         return Response.buildFailure(ex.getMessage());
     }
 
